@@ -70,11 +70,14 @@ for i in length_of_geom:
         distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
         'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'], u1=0.5, 
         u2=UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
-    mdb.Job(name='mani_'+str(i), model='Model-1', description='', type=ANALYSIS, 
+    job_name='mani_'+str(i)
+    mdb.Job(name=job_name, model='Model-1', description='', type=ANALYSIS, 
         atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=90, 
         memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, 
         explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=OFF, 
         modelPrint=OFF, contactPrint=OFF, historyPrint=OFF, userSubroutine='', 
         scratch='', resultsFormat=ODB, multiprocessingMode=DEFAULT, numCpus=1, 
         numGPUs=0)
-    mdb.jobs['mani_'+str(i)].submit(consistencyChecking=OFF)
+    mdb.jobs[job_name].submit(consistencyChecking=OFF)
+    mdb.jobs[job_name].waitForCompletion() ##wait for the analysis to complete
+    
