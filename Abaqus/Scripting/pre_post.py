@@ -97,7 +97,12 @@ for i in range(1,6):
         variable=(('LE', INTEGRATION_POINT, ((COMPONENT, 'LE11'), )), ('S', 
         INTEGRATION_POINT, ((COMPONENT, 'S11'), )), ), elementPick=((
         'PART-1-1', 1, ('[#1 ]', )), ), )
-    xyp = session.xyPlots['XYPlot-1']
+    # Try to get the XY plot, or create it if it doesn't exist
+    try:
+        xyp = session.xyPlots['XYPlot-1']
+    except KeyError:
+        print("XYPlot-1 does not exist. Creating it now.")
+        xyp = session.XYPlot(name='XYPlot-1')
     chartName = xyp.charts.keys()[0]
     chart = xyp.charts[chartName]
     curveList = session.curveSet(xyData=xyList)
